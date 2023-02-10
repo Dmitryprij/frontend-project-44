@@ -17,9 +17,7 @@
   },
   "homepage": "https://github.com/Dmitryprij/frontend-project-44#readme",
   "bin": {
-    "brain-games": "bin/brain-games.js"
+   "brain-games": "bin/brain-games.js" 
   },
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "type" : "module"
 }
