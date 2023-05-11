@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { getName } from '../src/cli.js';
-const brainGame = () => {
-  getName();
-};
-brainGame();
+
+import greeting from '../src/cli.js';
+
+greeting();

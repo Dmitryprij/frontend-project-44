@@ -1,33 +1,41 @@
 #!/usr/bin/env node
 
-import tekst from '../cli.js';
-import { answerForm, checkAnswer } from '../index.js';
-import { calculator, magicNumbers, getOperator } from '../math.js';
+import basisOfGames from '../index.js';
+import getRandomInt from '../getRandomInt.js';
 
 const calc = () => {
-  const userName = tekst('What is the result of the expression?');
-  for (let i = 0; i < 3; i += 1) {
-    const operator = getOperator(['+', '-', '*']);
-    const x = magicNumbers(1, 20);
-    const y = magicNumbers(1, 20);
-    const example = `${x} ${operator} ${y}`;
-    const userAnswer = answerForm(example);
-    let correctAnswer = 0;
-    switch (operator) {
+  const noteToCalc = 'What is the result of the expression?';
+
+  const taskCalc = () => {
+    const number1 = getRandomInt(100);
+    const number2 = getRandomInt(100);
+
+    const signs = ['+', '-', '*'];
+    const sign = signs[getRandomInt(2)];
+
+    const question = `${number1} ${sign} ${number2}`;
+
+    let result = 0;
+    switch (sign) {
       case '+':
-        correctAnswer = calculator(x, y, '+');
+        result = number1 + number2;
         break;
-
       case '-':
-        correctAnswer = calculator(x, y, '-');
+        result = number1 - number2;
         break;
-
       case '*':
-        correctAnswer = calculator(x, y, '*');
+        result = number1 * number2;
         break;
       default:
+        result = null;
     }
-    if (!checkAnswer(userAnswer, correctAnswer, userName, i)) break;
-  }
+
+    result = result.toString();
+
+    return [question, result];
+  };
+
+  basisOfGames(noteToCalc, taskCalc);
 };
+
 export default calc;

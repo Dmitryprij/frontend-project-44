@@ -1,19 +1,48 @@
 #!/usr//bin/env node
-import tekst from '../cli.js';
-import { answerForm, checkAnswer } from '../index.js';
-import { magicNumbers, progression, gitProgress } from '../math.js';
+import basisOfGames from '../index.js';
+import getRandomInt from '../getRandomInt.js';
 
-const progress = () => {
-  const userName = tekst('What number is missing in the progression?');
+const progression = () => {
+  const noteToProgr = 'What number is missing in the progression?';
 
-  for (let i = 0; i < 3; i += 1) {
-    const a = magicNumbers();
-    const b = magicNumbers(2, 8);
-    const prog = progression(a, b);
-    const userAnswer = answerForm(prog, 'string');
-    const correctAnswer = gitProgress(prog);
+  const taskProgr = () => {
+    const sequence = [];
+    const lastIndex = 9;
 
-    if (!checkAnswer(userAnswer, correctAnswer, userName, i)) break;
-  }
+    const getStep = () => {
+      const necessaryStep = getRandomInt(7);
+
+      return (necessaryStep === 0 ? getStep() : necessaryStep);
+    };
+
+    const step = getStep();
+    const getStartNum = () => {
+      const num = getRandomInt(100);
+      const limitNum = num + (step * lastIndex);
+
+      if (limitNum > 100) { return getStartNum(); }
+
+      return num;
+    };
+
+    const startNum = getStartNum();
+
+    for (let i = 0, nextNum = startNum; i < 10; i += 1, nextNum += step) {
+      sequence.push(nextNum);
+    }
+
+    const randomIndex = getRandomInt(lastIndex);
+    const replacedNum = sequence[randomIndex];
+    let result = replacedNum;
+    sequence[randomIndex] = '..';
+
+    const question = sequence.join(' ');
+    result = result.toString();
+
+    return [question, result];
+  };
+
+  basisOfGames(noteToProgr, taskProgr);
 };
-export default progress;
+
+export default progression;

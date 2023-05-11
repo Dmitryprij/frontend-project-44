@@ -1,17 +1,33 @@
 #!/usr/bin/env node
 
-import tekst from '../cli.js';
-import { answerForm, checkAnswer } from '../index.js';
-import { magicNumbers, gitPrime } from '../math.js';
+import basisOfGames from '../index.js';
+import getRandomInt from '../getRandomInt.js';
 
 const prime = () => {
-  const userName = tekst('Answer "yes" if given number is prime. Otherwise answer "no".');
-  for (let i = 0; i < 3; i += 1) {
-    const randomNumber = magicNumbers();
-    const userAnswer = answerForm(randomNumber, 'string');
-    const correctAnswer = gitPrime(randomNumber);
+  const noteToPrime = 'Answer "yes" if given number is prime. Otherwise answer "no".';
 
-    if (!checkAnswer(userAnswer, correctAnswer, userName, i)) break;
-  }
+  const taskPrime = () => {
+    const number = getRandomInt(100);
+
+    const isPrime = (num) => {
+      if (num < 2) { return false; }
+
+      let i = 2;
+      while (i <= num / 2) {
+        if (num % i === 0) { return false; }
+        i += 1;
+      }
+
+      return true;
+    };
+
+    const question = `${number}`;
+    const result = (isPrime(number) ? 'yes' : 'no');
+
+    return [question, result];
+  };
+
+  basisOfGames(noteToPrime, taskPrime);
 };
+
 export default prime;
